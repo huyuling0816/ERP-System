@@ -1,0 +1,28 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 财务人员
+participant 商品列表
+participant 客户列表
+participant 账户列表
+participant 初期建账列表
+财务人员 -> 商品列表: 添加商品信息
+loop 还有下一项商品
+    财务人员 -> 商品列表: 添加商品类别、名称、型号、进价、售价
+    商品列表 -->> 初期建账列表: 添加成功
+actor 财务人员
+end
+财务人员 -> 客户列表: 添加客户信息
+loop 还有下一项客户
+    财务人员 -> 客户列表: 添加客户分类、级别等信息
+    客户列表 -->> 初期建账列表: 添加成功
+actor 财务人员
+end
+财务人员 -> 账户列表: 添加账户信息
+loop 还有下一项账户
+    财务人员 -> 账户列表: 添加账户名称、余额
+    账户列表 -->> 初期建账列表: 添加成功
+end
+初期建账列表 -> system: 初期建账
+system -->> 财务人员: 初期建账成功
+@enduml

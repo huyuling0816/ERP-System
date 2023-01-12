@@ -1,0 +1,15 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 财务人员or总经理 as actor
+alt 不设置筛选条件
+    actor -> 经营情况表: 查看经营情况表
+    经营情况表 -> system: 获取所有单据
+    经营情况表 <<-- system: 所有单据
+else 按条件筛选
+    actor -> 经营情况表: 设置时间区间，单据类型，客户，业务员
+    经营情况表 -> system: 获取符合条件的单据
+    经营情况表 <<-- system: 符合条件的单据
+end
+actor <<-- 经营情况表: 经营情况表
+@enduml

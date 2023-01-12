@@ -1,0 +1,17 @@
+@startuml
+autonumber 1 1 "<b>0"
+BonusController -> BonusServiceImpl : getBonusList()
+activate BonusController
+activate BonusServiceImpl
+BonusServiceImpl -> BonusMapper : getBonusList()
+activate BonusMapper
+BonusMapper -> Database.bonus_sheet : getBonusList
+activate Database.bonus_sheet
+BonusMapper <- Database.bonus_sheet :
+deactivate Database.bonus_sheet
+BonusServiceImpl <- BonusMapper :
+deactivate BonusMapper
+BonusController <- BonusServiceImpl :
+deactivate BonusServiceImpl
+deactivate BonusController
+@enduml

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nju.edu.erp.dao.AttendanceDao">
+    <insert id="insertAttendRecord" parameterType="AttendancePO">
+        insert into attendance(id,uid, uname, `date`) values (#{id},#{uid},#{uname},#{date});
+    </insert>
+
+
+    <delete id="deletePreRecord">
+        delete from attendance where `date` &lt;= #{date};  <!-- 小于等于转义   -->
+    </delete>
+
+    <select id="countAttendRecord" resultType="java.lang.Integer">
+        select count(*) from attendance
+        where uid = #{uid}  and date_format(`date`,'%y%m')=date_format(#{date},'%y%m');
+    </select>
+
+    <select id="countDayAttend" resultType="java.lang.Integer">
+        select count(*) from attendance where uid = #{uid} and
+        date_format(`date`,'%Y%m%d')=date_format(#{date},'%Y%m%d');
+    </select>
+
+    <select id="findAll" resultType="com.nju.edu.erp.model.po.AttendancePO">
+        select * from attendance;
+    </select>
+
+
+    <resultMap id="AttendancePO" type="com.nju.edu.erp.model.po.AttendancePO">
+        <id column="id" property="id"></id>
+        <result column="uid" property="uid"></result>
+        <result column="uname" property="uname"></result>
+        <result column="date" property="date"></result>
+    </resultMap>
+</mapper>

@@ -1,0 +1,14 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 财务人员
+participant 草稿单
+participant 经营历程表
+财务人员 -> 经营历程表: 复制单据
+经营历程表 -->> 草稿单: 生成一张以之前单据为模板的草稿单
+草稿单 -->> 财务人员: 给用户编辑的草稿单
+财务人员 -> 草稿单: 编辑草稿单
+草稿单 -> system: 制定单据
+system -->> 经营历程表: 制定单据，更新经营历程表
+经营历程表 -->> 财务人员: 复制单据完成
+@enduml

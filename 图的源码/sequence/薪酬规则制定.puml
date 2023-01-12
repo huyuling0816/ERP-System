@@ -1,0 +1,16 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 人力资源人员
+人力资源人员 -> 薪酬规则草稿: 制定薪酬规则
+人力资源人员 <<-- 薪酬规则草稿: 显示草稿
+人力资源人员 -> 薪酬规则草稿: 添加规则信息
+薪酬规则草稿 -> system: 新增薪酬规则
+alt 接受制定请求
+system -->> 薪酬规则列表: 更新后的薪酬规则列表
+薪酬规则列表 -->> 人力资源人员: 制定完成
+else 拒绝制定请求
+system -->> 薪酬规则草稿: 已有该职位的薪酬规则，重复制定
+人力资源人员 <<-- 薪酬规则草稿: 制定失败
+end
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+autonumber 1 1 "<b>0"
+PromotionController -> PromotionController : addUserLevel(PromotionStrategyByUserLevel VO vo)
+activate PromotionController
+deactivate PromotionController
+@enduml

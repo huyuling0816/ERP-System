@@ -1,0 +1,15 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 财务人员or总经理 as actor
+alt 不设置筛选条件
+    actor -> 销售明细表: 查看销售明细表
+    销售明细表 -> system: 获取所有销售单和销售退货单
+    销售明细表 <<-- system: 所有销售单和销售退货单
+else 按条件筛选
+    actor -> 销售明细表: 设置时间区间，商品名，客户，业务员，仓库
+    销售明细表 -> system: 获取符合条件的销售单和销售退货单
+    销售明细表 <<-- system: 符合条件的销售单和销售退货单
+end
+actor <<-- 销售明细表: 销售明细表
+@enduml

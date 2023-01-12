@@ -1,0 +1,8 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 除总经理外的所有员工
+除总经理外的所有员工 -> 打卡按钮: 打卡
+打卡按钮 -> system: 增加打卡记录
+system -->> 除总经理外的所有员工: 打卡成功
+@enduml

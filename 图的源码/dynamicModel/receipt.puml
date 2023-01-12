@@ -1,0 +1,87 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+'autonumber
+'GiftController -> GiftService: makeGift(UserVO userVO, GiftSheetVO GiftSheetVO)
+'activate ReceiptController
+'activate ReceiptService
+'ReceiptService -> ReceiptMapper: makeReceiptSheet(userVO,receiptSheetVO)
+'activate ReceiptMapper
+'ReceiptMapper -> Database_receipt: saveSheet(ReceiptSheetPO toSave)
+'activate Database_receipt
+'Database_receipt -> ReceiptMapper
+'deactivate Database_receipt
+'ReceiptMapper -> ReceiptService
+'deactivate ReceiptMapper
+'ReceiptService -> ReceiptController
+'deactivate ReceiptService
+'deactivate ReceiptController
+
+'GiftController -> GiftService: showSheetByState(GiftSheetState state)
+'activate GiftController
+'activate GiftService
+'GiftService -> GiftMapper: getGiftSheetByState(state)
+'activate GiftMapper
+'GiftMapper -> Database_Gift: getGiftSheetByState(GiftSheetState state)
+'activate Database_Gift
+'Database_Gift -> GiftMapper
+'deactivate Database_Gift
+'GiftMapper -> GiftService
+'deactivate GiftMapper
+'GiftService -> GiftController
+'deactivate GiftService
+'deactivate GiftController
+
+'GiftController -> GiftService: Approval(String GiftId,GiftSheetState state)
+'activate GiftController
+'activate GiftService
+'GiftService -> GiftMapper: getGiftSheetByState(state)
+'activate GiftMapper
+'GiftMapper -> Database_Gift: getGiftSheetByState(GiftSheetState state)
+'activate Database_Gift
+'Database_Gift -> GiftMapper
+'deactivate Database_Gift
+'GiftMapper -> GiftService
+'deactivate GiftMapper
+'GiftService -> GiftController
+'deactivate GiftService
+'deactivate GiftController
+
+GiftController -> GiftService:Approval(String GiftId,GiftSheetState state)
+activate GiftController
+activate GiftService
+GiftService -> GiftMapper : findSheetById(sheetId)
+activate GiftMapper
+GiftMapper -> Database_Gift : findSheetById(String sheetId)
+activate Database_Gift
+Database_Gift -> GiftMapper
+deactivate Database_Gift
+GiftMapper -> GiftService
+alt approval fail
+  GiftService -> GiftMapper : updateSheetState(sheetId,state)
+  GiftMapper -> Database_Gift : updateSheetState(String sheetId,GiftSheetState state)
+  activate Database_Gift
+  Database_Gift -> GiftMapper
+  deactivate Database_Gift
+  GiftMapper -> GiftService
+else approval success
+GiftService -> GiftMapper : updateSheetStateOnPrev(sheetId,prevState,state)
+GiftMapper -> Database_Gift : updateSheetStateOnPrev(sheetId,prevState,state)
+activate Database_Gift
+Database_Gift -> GiftMapper
+deactivate Database_Gift
+GiftMapper -> GiftService
+deactivate GiftMapper
+GiftService -> ProductService : findProductById(productId)
+activate ProductService
+ProductService -> GiftService
+GiftService -> ProductService : updateProduct(product)
+ProductService -> GiftService
+deactivate ProductService
+end
+
+GiftService -> GiftController
+deactivate GiftService
+deactivate GiftController
+
+@enduml

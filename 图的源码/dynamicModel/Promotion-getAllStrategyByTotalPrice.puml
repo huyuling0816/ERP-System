@@ -1,0 +1,17 @@
+@startuml
+autonumber 1 1 "<b>0"
+PromotionController -> PromotionServiceImpl : getAllPromotionByTotalPrice()
+activate PromotionController
+activate PromotionServiceImpl
+PromotionServiceImpl -> PromotionByTotalPriceMapper : findAll()
+activate PromotionByTotalPriceMapper
+PromotionByTotalPriceMapper -> Database.promotion_strategy_by_total_price : findAll
+activate Database.promotion_strategy_by_total_price
+PromotionByTotalPriceMapper <- Database.promotion_strategy_by_total_price :
+deactivate Database.promotion_strategy_by_total_price
+PromotionServiceImpl <- PromotionByTotalPriceMapper :
+deactivate PromotionByTotalPriceMapper
+PromotionController  <- PromotionServiceImpl:
+deactivate PromotionServiceImpl
+deactivate PromotionController
+@enduml

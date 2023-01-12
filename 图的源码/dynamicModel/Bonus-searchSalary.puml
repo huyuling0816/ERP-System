@@ -1,0 +1,18 @@
+@startuml
+autonumber 1 1 "<b>0"
+BonusController -> BonusServiceImpl : searchSalary(Integer uid , Integer year , BigDecimal salary , BigDecimal bonus)
+activate BonusController
+activate BonusServiceImpl
+BonusServiceImpl -> BonusServiceImpl : searchSalary(BonusVO bonusVO)
+BonusServiceImpl -> BonusMapper : getYearActualSalary(Integer uid, Date date)
+activate BonusMapper
+BonusMapper -> Database.bonus_sheet : getYearActualSalary
+activate Database.bonus_sheet
+BonusMapper <- Database.bonus_sheet :
+deactivate Database.bonus_sheet
+BonusServiceImpl <- BonusMapper :
+deactivate BonusMapper
+BonusController <- BonusServiceImpl :
+deactivate BonusServiceImpl
+deactivate BonusController
+@enduml

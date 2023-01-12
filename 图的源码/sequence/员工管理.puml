@@ -1,0 +1,11 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 人力资源人员
+人力资源人员 -> 员工草稿: 新增员工
+人力资源人员 <<-- 员工草稿: 显示草稿
+人力资源人员 -> 员工草稿: 添加员工信息
+员工草稿 ->> system: 添加员工
+账户列表 <<-- system: 更新后的员工列表
+人力资源人员 <<-- 账户列表: 新增完成
+@enduml

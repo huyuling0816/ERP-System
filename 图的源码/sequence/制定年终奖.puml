@@ -1,0 +1,13 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 总经理
+总经理 -> 年终奖草稿: 选择员工、年份，制定年终奖
+年终奖草稿 -> system: 查询该员工前11个月的工资总和
+年终奖草稿 <<-- system: 该员工前11个月的工资总和
+年终奖草稿 -->> 总经理: 返回草稿单，待总经理制定最终年终奖
+年终奖草稿 <- 总经理: 填写年终奖
+年终奖草稿 -> system: 建立年终奖
+system -->> 年终奖列表: 更新后的所有年终奖
+年终奖列表 -->> 总经理: 制定完成
+@enduml

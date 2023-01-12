@@ -1,0 +1,18 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 财务人员
+participant 促销策略草稿
+participant 促销策略列表
+participant system
+skinparam responseMessageBelowArrow true
+财务人员 -> 促销策略草稿: 选择方式制定促销策略
+财务人员 <<-- 促销策略草稿: 显示草稿
+loop 还有下一条策略
+    财务人员 ->> 促销策略草稿: 添加策略
+    促销策略草稿 <<-- 促销策略草稿: 更新草稿
+end
+促销策略草稿 -> system: 添加促销策略
+促销策略列表 <<-- system: 更新后的促销策略列表
+财务人员 <<-- 促销策略列表: 制定完成
+@enduml

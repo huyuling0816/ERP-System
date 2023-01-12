@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nju.edu.erp.dao.SalarySystemDao">
+    <insert id="insertSalarySystem" parameterType="SalarySystemPO">
+        insert into salary_system(`role`, base, post, calculate_method, distribute_method, unemployment_insurance_rate, housing_fund_rate)
+        value (#{role},#{base},#{post},#{salaryMethod},#{salaryDistribution},#{unemploymentInsuranceRate},#{housingFundRate})
+    </insert>
+
+    <update id="updateByRole" parameterType="SalarySystemPO">
+        update salary_system
+        set
+            base = #{base},
+            post = #{post},
+            calculate_method = #{salaryMethod},
+            distribute_method = #{salaryDistribution},
+            unemployment_insurance_rate = #{unemploymentInsuranceRate},
+            housing_fund_rate = #{housingFundRate}
+        where `role` = #{role}
+    </update>
+
+    <select id="findByRole" resultMap="SalarySystemPO">
+        select * from salary_system
+        where `role` = #{role}
+    </select>
+    
+    <select id="findAll" resultMap="SalarySystemPO">
+        select * from salary_system
+    </select>
+    
+    <delete id="deleteByRole">
+        delete from salary_system
+        where `role` = #{role}
+    </delete>
+
+    <resultMap id="SalarySystemPO" type="com.nju.edu.erp.model.po.SalarySystemPO">
+        <id column="role" property="role"></id>
+        <result column="base" property="base"></result>
+        <result column="post" property="post"></result>
+        <result column="calculate_method" property="salaryMethod"></result>
+        <result column="distribute_method" property="salaryDistribution"></result>
+        <result column="unemployment_insurance_rate" property="unemploymentInsuranceRate"></result>
+        <result column="housing_fund_rate" property="housingFundRate"></result>
+    </resultMap>
+</mapper>

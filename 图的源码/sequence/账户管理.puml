@@ -1,0 +1,11 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 财务人员
+财务人员 -> 账户列表: 编辑账户信息
+loop 更新下一个账户
+    账户列表 ->> system: 根据id更新账户信息
+    账户列表 <<-- system: 更新后的账户
+end
+财务人员 <<-- 账户列表: 编辑完成
+@enduml

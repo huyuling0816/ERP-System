@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nju.edu.erp.dao.SalarySheetDao">
+
+    <insert id="createSalarySheet">
+        insert into salary_sheet (id,uname,uid,account_name,raw_salary,personal_income_tax,unemployment_insurance,housing_provident_fund,actual_salary,`state`,`date`,operator,remark)
+        values (#{id},#{uname},#{uid},#{accountName},#{rawSalary},#{personalIncomeTax},#{unemploymentInsurance},#{housingProvidentFund},#{actualSalary},#{state},#{date},#{operator},#{remark})
+    </insert>
+
+    <select id="getLatestSheet" resultType="com.nju.edu.erp.model.po.SalarySheetPO">
+        select * from salary_sheet order by id desc limit 0,1 ;
+    </select>
+
+    <select id="getSalarySheetByState" resultType="com.nju.edu.erp.model.po.SalarySheetPO">
+        select * from salary_sheet where state = #{state}
+    </select>
+
+    <select id="getAllSalarySheet" resultType="com.nju.edu.erp.model.po.SalarySheetPO">
+        select * from salary_sheet
+    </select>
+
+    <select id="getSheetById" resultType="com.nju.edu.erp.model.po.SalarySheetPO">
+        select * from salary_sheet where id=#{id}
+    </select>
+
+    <select id="getYearActualSalary" resultType="java.math.BigDecimal">
+        select sum(all actual_salary) from salary_sheet
+        where uid = #{uid} and date_format(`date`,'%y')=date_format(#{date},'%y')
+          and month(`date`) &lt; 12;
+
+    </select>
+
+    <update id="updateSheetState">
+        update salary_sheet set state = #{state} where id = #{id}
+    </update>
+
+    <update id="updateSheetStateOnPrev">
+        update salary_sheet
+        set state = #{state}
+        where id = #{id} and state = #{prev}
+    </update>
+
+    <resultMap id="SalarySheetPO" type="com.nju.edu.erp.model.po.SalarySheetPO">
+        <id column="id" property="id"></id>
+        <result column="uname" property="uname"></result>
+        <result column="uid" property="uid"></result>
+        <result column="account_name" property="accountName"></result>
+        <result column="raw_salary" property="rawSalary"></result>
+        <result column="personal_income_tax" property="personalIncomeTax"></result>
+        <result column="unemployment_insurance" property="unemploymentInsurance"></result>
+        <result column="housing_provident_fund" property="housingProvidentFund"></result>
+        <result column="actual_salary" property="actualSalary"></result>
+        <result column="state" property="state"></result>
+        <result column="date" property="date"></result>
+        <result column="operator" property="operator"></result>
+        <result column="remark" property="remark"></result>
+    </resultMap>
+
+</mapper>

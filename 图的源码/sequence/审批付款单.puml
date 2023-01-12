@@ -1,0 +1,15 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 总经理
+总经理 -> 付款单列表: 审批付款单
+alt 通过审批
+付款单列表 -> system: 修改付款单状态为审批完成
+付款单列表 -> system: 更改客户应收字段和账户余额
+付款单列表 <<-- system: 更新付款单列表
+else 未通过审批
+付款单列表 -> system: 修改付款单状态为审批失败
+付款单列表 <<-- system: 更新付款单列表
+end
+付款单列表 -->> 总经理: 审批完成
+@enduml

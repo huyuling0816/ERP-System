@@ -1,0 +1,14 @@
+@startuml
+skinparam dpi 150
+actor 人力资源人员
+participant 工资单草稿
+participant 工资单列表
+participant system
+skinparam responseMessageBelowArrow true
+人力资源人员 -> 工资单草稿: 选择员工制定工资单
+人力资源人员 <<-- 工资单草稿: 显示草稿
+人力资源人员 -> 工资单草稿: 制定工资单
+工资单草稿 -> system: 添加工资单
+工资单列表 <<-- system: 更新后的工资单列表
+人力资源人员 <<-- 工资单列表: 制定完成
+@enduml

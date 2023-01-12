@@ -1,0 +1,93 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+'PaymentController -> PaymentService: makePayment(UserVO userVO, PaymentSheetVO paymentSheetVO)
+'activate PaymentController
+'activate PaymentService
+'PaymentService -> PaymentMapper: makePaymentSheet(userVO,paymentSheetVO)
+'activate PaymentMapper
+'PaymentMapper -> Database_payment: saveSheet(PaymentSheetPO toSave)
+'activate Database_payment
+'Database_payment -> PaymentMapper
+'deactivate Database_payment
+'PaymentMapper -> PaymentService
+'deactivate PaymentMapper
+'PaymentService -> PaymentController
+'deactivate PaymentService
+'deactivate PaymentController
+
+'PaymentController -> PaymentService: showSheetByState(FinanceSheetState state)
+'activate PaymentController
+'activate PaymentService
+'PaymentService -> PaymentMapper: getPaymentSheetByState(state)
+'activate PaymentMapper
+'PaymentMapper -> Database_payment: getPaymentSheetByState(FinanceSheetState state)
+'activate Database_payment
+'Database_payment -> PaymentMapper
+'deactivate Database_payment
+'PaymentMapper -> PaymentService
+'deactivate PaymentMapper
+'PaymentService -> PaymentController
+'deactivate PaymentService
+'deactivate PaymentController
+
+'PaymentController -> PaymentService: Approval(String paymentId,FinanceSheetState state)
+'activate PaymentController
+'activate PaymentService
+'PaymentService -> PaymentMapper: getPaymentSheetByState(state)
+'activate PaymentMapper
+'PaymentMapper -> Database_payment: getPaymentSheetByState(FinanceSheetState state)
+'activate Database_payment
+'Database_payment -> PaymentMapper
+'deactivate Database_payment
+'PaymentMapper -> PaymentService
+'deactivate PaymentMapper
+'PaymentService -> PaymentController
+'deactivate PaymentService
+'deactivate PaymentController
+
+PaymentController -> PaymentService:Approval(String paymentId,FinanceSheetState state)
+activate PaymentController
+activate PaymentService
+PaymentService -> PaymentMapper : findSheetById(sheetId)
+activate PaymentMapper
+PaymentMapper -> Database_payment : findSheetById(String sheetId)
+activate Database_payment
+Database_payment -> PaymentMapper
+deactivate Database_payment
+PaymentMapper -> PaymentService
+alt approval fail
+  PaymentService -> PaymentMapper : updateSheetState(sheetId,state)
+  PaymentMapper -> Database_payment : updateSheetState(String sheetId,FinanceSheetState state)
+  activate Database_payment
+  Database_payment -> PaymentMapper
+  deactivate Database_payment
+  PaymentMapper -> PaymentService
+else approval success
+PaymentService -> PaymentMapper : updateSheetStateOnPrev(sheetId,prevState,state)
+PaymentMapper -> Database_payment : updateSheetStateOnPrev(sheetId,prevState,state)
+activate Database_payment
+Database_payment -> PaymentMapper
+deactivate Database_payment
+PaymentMapper -> PaymentService
+deactivate PaymentMapper
+PaymentService -> CustomerService : findCustomerById(customerId)
+activate CustomerService
+CustomerService -> PaymentService
+PaymentService -> CustomerService : updateCustomer(customer)
+CustomerService -> PaymentService
+deactivate CustomerService
+PaymentService -> AccountService : findAccountByName(bankAccount)
+activate AccountService
+AccountService -> PaymentService
+PaymentService -> AccountService : updateAmount(accountPO)
+AccountService -> PaymentService
+deactivate AccountService
+end
+
+PaymentService -> PaymentController
+deactivate PaymentService
+deactivate PaymentController
+
+@enduml

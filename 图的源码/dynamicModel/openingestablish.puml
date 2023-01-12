@@ -1,0 +1,54 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+OpeningEstablishController -> OpeningEstablishService: establish(productList,customerList,customerList)
+activate OpeningEstablishController
+activate OpeningEstablishService
+loop next product
+OpeningEstablishService -> ProductService: createProduct(createProduct)
+activate ProductService
+ProductService -> OpeningEstablishService
+deactivate ProductService
+end
+loop next customer
+OpeningEstablishService -> CustomerService: addCustomer(customer)
+activate CustomerService
+CustomerService -> OpeningEstablishService
+deactivate CustomerService
+end
+loop next account
+OpeningEstablishService -> AccountService: addAccount(account)
+activate AccountService
+AccountService -> OpeningEstablishService
+deactivate AccountService
+end
+OpeningEstablishService -> OpeningEstablishMapper:createProduct(createProduct)
+activate OpeningEstablishMapper
+OpeningEstablishMapper -> Database_openingestablish:createProduct(CreateProductPO createProduct)
+activate Database_openingestablish
+Database_openingestablish -> OpeningEstablishMapper
+deactivate Database_openingestablish
+OpeningEstablishMapper -> OpeningEstablishService
+
+OpeningEstablishService -> OpeningEstablishMapper:createCustomer(createCustomer)
+OpeningEstablishMapper -> Database_openingestablish:createCustomer(CreateCustomerPO createCustomer)
+activate Database_openingestablish
+Database_openingestablish -> OpeningEstablishMapper
+deactivate Database_openingestablish
+OpeningEstablishMapper -> OpeningEstablishService
+
+OpeningEstablishService -> OpeningEstablishMapper: createAccount(createAccount)
+OpeningEstablishMapper -> Database_openingestablish:createAccount(CreateAccountPO createAccount)
+activate Database_openingestablish
+Database_openingestablish -> OpeningEstablishMapper
+deactivate Database_openingestablish
+OpeningEstablishMapper -> OpeningEstablishService
+OpeningEstablishService -> OpeningEstablishController
+deactivate OpeningEstablishController
+deactivate OpeningEstablishService
+
+
+
+@enduml

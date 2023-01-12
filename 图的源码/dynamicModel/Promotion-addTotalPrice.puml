@@ -1,0 +1,6 @@
+@startuml
+autonumber 1 1 "<b>0"
+PromotionController -> PromotionController : addPricePack(PromotionStrategyByTotalPriceVO vo)
+activate PromotionController
+deactivate PromotionController
+@enduml

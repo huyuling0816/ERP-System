@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nju.edu.erp.dao.PaymentSheetDao">
+    <insert id="saveSheet">
+        insert into payment_sheet (id, supplier, operator, total_amount, `state`, create_time)
+        values (#{id},#{supplier},#{operator},#{totalAmount},#{state},#{createTime});
+    </insert>
+
+    <insert id="saveBatchSheetContent" useGeneratedKeys="true" keyProperty="id">
+        insert into payment_sheet_content (payment_sheet_id,bank_account,transfer_amount,remark) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.paymentSheetId},#{item.bankAccount},#{item.transferAmount},#{item.remark})
+        </foreach>
+    </insert>
+
+    <update id="updateSheetState">
+        update payment_sheet
+        set state = #{state}
+        where id = #{sheetId}
+    </update>
+
+    <update id="updateSheetStateOnPrev">
+        update payment_sheet
+        set state = #{state}
+        where id = #{sheetId} and state = #{prev}
+    </update>
+
+    <select id="getLatestSheet" resultType="com.nju.edu.erp.model.po.PaymentSheetPO">
+        select * from payment_sheet order by id desc limit 0,1 ;
+    </select>
+
+    <select id="findAllSheet" resultType="com.nju.edu.erp.model.po.PaymentSheetPO">
+        select * from payment_sheet;
+    </select>
+
+    <select id="findContentBySheetId" resultType="com.nju.edu.erp.model.po.PaymentSheetContentPO">
+        select * from payment_sheet_content where payment_sheet_id = #{sheetId};
+    </select>
+
+    <select id="findSheetById" resultType="com.nju.edu.erp.model.po.PaymentSheetPO">
+        select * from payment_sheet where id = #{id};
+    </select>
+
+    <select id="findAllByState" resultType="com.nju.edu.erp.model.po.PaymentSheetPO">
+        select * from payment_sheet where state = #{state}
+    </select>
+    <select id="findAllByCreateTime" resultType="com.nju.edu.erp.model.po.PaymentSheetPO">
+        select * from payment_sheet where create_time between #{beginTime} and #{endTime}
+    </select>
+    <select id="findAllByCustomerId" resultType="com.nju.edu.erp.model.po.PaymentSheetPO">
+        select * from payment_sheet where supplier = #{id}
+    </select>
+    <select id="findAllByOperatorName" resultType="com.nju.edu.erp.model.po.PaymentSheetPO">
+        select * from payment_sheet where operator = #{operator}
+    </select>
+</mapper>

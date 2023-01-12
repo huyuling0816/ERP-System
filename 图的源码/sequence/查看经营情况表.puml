@@ -1,0 +1,9 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 财务人员or总经理
+财务人员or总经理 -> 经营情况表: 查看经营情况表
+经营情况表 -> system: 计算折让后总收入、总折让额、总支出、总利润、折让后总收入的明细、总支出的明细
+system -->> 经营情况表: 显示折让后总收入、总折让额、总支出、总利润、折让后总收入的明细、总支出的明细
+system -->> 财务人员or总经理: 查看成功
+@enduml

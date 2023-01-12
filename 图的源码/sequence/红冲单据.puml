@@ -1,0 +1,11 @@
+@startuml
+skinparam dpi 150
+skinparam responseMessageBelowArrow true
+actor 财务人员
+财务人员 -> 经营历程表: 红冲单据
+loop 还有下一项待红冲的单据
+    经营历程表 ->> system: 生成一个把原单据各数量取负数的单据
+    经营历程表 <<-- system: 生成成功
+end
+经营历程表 --> 财务人员: 红冲单据完成
+@enduml

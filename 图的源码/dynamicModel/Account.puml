@@ -1,0 +1,83 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+'AccountController -> AccountService:deleteAccount(String bankAccount)
+'activate AccountController
+'activate AccountService
+'AccountService -> AccountMapper: findAccountByName(name)
+'activate AccountMapper
+'AccountMapper -> Database_account: findAccountByName(String name)
+'activate Database_account
+'Database_account -> AccountMapper
+'deactivate Database_account
+'AccountMapper -> AccountService
+'deactivate AccountMapper
+'AccountService -> AccountMapper: deleteByName(name)
+'activate AccountMapper
+'AccountMapper -> Database_account: deleteByName(String name)
+'activate Database_account
+'Database_account -> AccountMapper
+'deactivate Database_account
+'AccountMapper -> AccountService
+'deactivate AccountMapper
+'AccountService -> AccountController
+'deactivate AccountService
+'deactivate AccountController
+
+'autonumber
+'AccountController -> AccountService: updateAmount(String bankAccount,String transferAmount)
+'activate AccountController
+'activate AccountService
+'AccountService -> AccountMapper: findAccountByName(name)
+'activate AccountMapper
+'AccountMapper -> Database_account: findAccountByName(String name)
+'activate Database_account
+'Database_account -> AccountMapper
+'deactivate Database_account
+'AccountMapper -> AccountService
+'deactivate AccountMapper
+'AccountService -> AccountMapper: updateAmount(account)
+'activate AccountMapper
+'AccountMapper -> Database_account: updateAmount(AccountPO account)
+'activate Database_account
+'Database_account -> AccountMapper
+'deactivate Database_account
+'AccountMapper -> AccountService
+'deactivate AccountMapper
+'AccountService -> AccountController
+'deactivate AccountService
+'deactivate AccountController
+
+AccountController -> AccountService: findByKeyword(String keyword)
+activate AccountService
+activate AccountController
+AccountService -> AccountMapper: findByKeyword(keyword)
+activate AccountMapper
+AccountMapper -> Database_account: findByKeyword(String keyword)
+activate Database_account
+Database_account -> AccountMapper
+deactivate Database_account
+AccountMapper -> AccountService
+deactivate AccountMapper
+AccountService -> AccountController
+deactivate AccountController
+deactivate AccountService
+
+'AccountController -> AccountService: addAccount(accountVO)
+'activate AccountService
+'activate AccountController
+'AccountService -> AccountMapper: addAccount(account)
+'activate AccountMapper
+'AccountMapper -> Database_account: addAccount(AccountPO account)
+'activate Database_account
+'Database_account -> AccountMapper
+'deactivate Database_account
+'AccountMapper -> AccountService
+'deactivate AccountMapper
+'AccountService -> AccountController
+'deactivate AccountController
+'deactivate AccountService
+
+@enduml

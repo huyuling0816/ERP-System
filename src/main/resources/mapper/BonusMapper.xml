@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nju.edu.erp.dao.BonusDao">
+    <update id="makeSalary">
+        update bonus_sheet
+        set bonus = #{bonus}
+        where uid = #{uid} and year = #{year}
+    </update>
+
+    <resultMap id="CustomerPO" type="com.nju.edu.erp.model.po.BonusPO">
+        <id column="uid" property="uid"></id>
+        <result column="year" property="year"></result>
+        <result column="salary" property="salary"></result>
+        <result column="bonus" property="bonus"></result>
+    </resultMap>
+
+    <insert id="createBonus">
+        insert into bonus_sheet (uid,year,salary)
+        values(#{uid},#{year},#{salary})
+    </insert>
+
+    <select id="getBonusList" resultType="com.nju.edu.erp.model.po.BonusPO">
+        select * from bonus_sheet
+        where bonus is not null
+    </select>
+
+    <select id="getBonus" resultType="java.math.BigDecimal">
+        select bonus from bonus_sheet
+        where uid = #{uid} and year = #{year}
+    </select>
+
+</mapper>

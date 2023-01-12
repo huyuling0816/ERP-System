@@ -1,0 +1,19 @@
+@startuml
+autonumber 1 1 "<b>0"
+PromotionController -> PromotionServiceImpl : makePromotionStrategyByUserLevel()
+activate PromotionController
+activate PromotionServiceImpl
+PromotionServiceImpl -> PromotionStrategyByUserLevelMapper : makePromotionStrategyByUserLevel(List<PromotionStrategyByUserLevelVO> list)
+activate PromotionStrategyByUserLevelMapper
+PromotionStrategyByUserLevelMapper -> Database.promotion_strategy_by_user_level : getLatestStrategy()
+activate Database.promotion_strategy_by_user_level
+PromotionStrategyByUserLevelMapper <- Database.promotion_strategy_by_user_level :
+PromotionStrategyByUserLevelMapper -> Database.promotion_strategy_by_user_level : saveStrategy(PromotionStrategyByUserLevelPO toSave)
+PromotionStrategyByUserLevelMapper <- Database.promotion_strategy_by_user_level :
+deactivate Database.promotion_strategy_by_user_level
+PromotionServiceImpl <- PromotionStrategyByUserLevelMapper :
+deactivate PromotionStrategyByUserLevelMapper
+PromotionController  <- PromotionServiceImpl:
+deactivate PromotionServiceImpl
+deactivate PromotionController
+@enduml

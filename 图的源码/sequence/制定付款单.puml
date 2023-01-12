@@ -1,0 +1,17 @@
+@startuml
+skinparam dpi 150
+actor 财务人员
+participant 付款单草稿
+participant 付款单列表
+participant system
+skinparam responseMessageBelowArrow true
+财务人员 -> 付款单草稿: 选择客户制定付款单
+财务人员 <<-- 付款单草稿: 显示草稿
+loop 还有下一项转账记录
+    财务人员 ->> 付款单草稿: 添加转账记录
+    付款单草稿 <<-- 付款单草稿: 更新草稿
+end
+付款单草稿 -> system: 添加付款单
+付款单列表 <<-- system: 更新后的付款单列表
+财务人员 <<-- 付款单列表: 制定完成
+@enduml

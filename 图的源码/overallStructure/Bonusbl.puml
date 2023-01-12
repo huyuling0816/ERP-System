@@ -1,0 +1,13 @@
+@startuml
+class BonusController
+interface BonusService
+class BonusServiceImpl
+class BonusPO
+class BonusVO
+interface BonusMapper
+BonusController --> BonusService
+BonusServiceImpl ..|> BonusService
+BonusServiceImpl ..> BonusPO
+BonusServiceImpl ..> BonusVO
+BonusServiceImpl ..> BonusMapper
+@enduml

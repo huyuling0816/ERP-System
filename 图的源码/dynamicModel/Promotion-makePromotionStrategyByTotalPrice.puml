@@ -1,0 +1,19 @@
+@startuml
+autonumber 1 1 "<b>0"
+PromotionController -> PromotionServiceImpl : makePromotionStrategyByTotalPrice()
+activate PromotionController
+activate PromotionServiceImpl
+PromotionServiceImpl -> PromotionStrategyByTotalPriceMapper : makePromotionStrategyByTotalPrice(List<PromotionStrategyByTotalPriceVO> list)
+activate PromotionStrategyByTotalPriceMapper
+PromotionStrategyByTotalPriceMapper -> Database.promotion_strategy_by_price_packs : getLatestStrategy()
+activate Database.promotion_strategy_by_price_packs
+PromotionStrategyByTotalPriceMapper <- Database.promotion_strategy_by_price_packs :
+PromotionStrategyByTotalPriceMapper -> Database.promotion_strategy_by_price_packs : saveStrategy(PromotionStrategyByTotalPricePO toSave)
+PromotionStrategyByTotalPriceMapper <- Database.promotion_strategy_by_price_packs :
+deactivate Database.promotion_strategy_by_price_packs
+PromotionServiceImpl <- PromotionStrategyByTotalPriceMapper :
+deactivate PromotionStrategyByTotalPriceMapper
+PromotionController  <- PromotionServiceImpl:
+deactivate PromotionServiceImpl
+deactivate PromotionController
+@enduml
