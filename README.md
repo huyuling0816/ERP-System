@@ -1,3 +1,8 @@
 # SEECII-ERP
 
-2022 软工二大作业demo
+The backend of an ERP system using SpringBoot and Mybatis.
+
+The frontend uses Vue.
+
+
+
